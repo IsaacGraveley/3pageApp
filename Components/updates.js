@@ -1,9 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Dimensions } from 'react-native';
 
+//get the screen width and make it a variable
 const screenWidth = Math.round(Dimensions.get('window').width);
+
+//this file creates a component to be used on the updateScreen page, to resemble news like article postings with a title, image and caption
+
+//create an array of images to be used in the props value.
 const updateImages = {
     liquidUpdate: require('./images/liquidUpdate.jpg'),
+    sktUpdate: require('./images/skt_team.jpg'),
+    fnaticUpdate: require('./images/fnatic_team.png')
   };
 
 export default class UpdateBloc extends React.Component {
@@ -11,18 +18,21 @@ export default class UpdateBloc extends React.Component {
   render() {
   return (
     <ScrollView contentContainerStyle={styles.updateImageContainer}>
+      {/* setup an image for the component, with the prop name of updateTitle */}
         <Text style={styles.updateTitle}>{this.props.updateTitle}</Text>
+        {/* setup an image for the component, with the prop name of updateImage */}
         <Image
           style={styles.imageStyle}
           source={updateImages[this.props.updateImage]}
         />
+        {/* setup an image for the component, with the prop name of updateCaption */}
       <Text style={styles.updateCaption}>{this.props.updateCaption}</Text>
     </ScrollView>
   );
 }
 }
 
-
+//create styles for the component
 const styles = StyleSheet.create({
   updateImageContainer: { 
     marginTop: '5%',
