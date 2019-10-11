@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Dimensions, Animated } from 'react-native';
 
 //this file creats a component to display an image of a team, with their name and number of championship wins
 
@@ -22,19 +22,37 @@ const teamImages = {
   };
 
 export default class TeamCard extends React.Component {
-    
+  //create start values for the animations
+  sizeAnimation = new Animated.Value(0);
+  fadeIn = new Animated.Value(0);
+
+  //when the component loads, create these animations
+  componentDidMount(){
+    //add a duration of 2 seconds, and make its end value 400 for the size of the images.
+      Animated.timing(this.sizeAnimation, {
+        toValue: 400,
+        duration: 2000
+      }).start()
+      
+      Animated.timing(this.fadeIn, {
+        toValue:1,
+        duration:2000,
+      }).start()
+  }
+  
   render() {
   return (
+
     <ScrollView contentContainerStyle={styles.imageContainer}>
       {/* setup an image for the component, with the prop name of playerImage */}
-      <Image
-          style={styles.imageStyle}
+      <Animated.Image
+          style={{...styles.imageStyle, width: this.sizeAnimation}}
           source={teamImages[this.props.teamImage]}
         />
         {/* setup an image for the component, with the prop name of teamName */}
-        <Text style={styles.teamName}>{this.props.teamName}</Text>
+        <Animated.Text style={{...styles.teamName, opacity: this.fadeIn}}>{this.props.teamName}</Animated.Text>
         {/* setup an image for the component, with the prop name of champsWins */}
-      <Text style={styles.champsWins}>Past Championships wins: {this.props.champsWins}</Text>
+      <Animated.Text style={{...styles.champsWins, opacity: this.fadeIn}}>Past Championships wins: {this.props.champsWins}</Animated.Text>
     </ScrollView>
   );
 }
@@ -54,7 +72,7 @@ const styles = StyleSheet.create({
   },
 
   imageStyle: {
-    width: '100%',
+    // width: '100%',
     height: 300,
     resizeMode: 'contain',
 

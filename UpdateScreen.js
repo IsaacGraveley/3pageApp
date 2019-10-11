@@ -1,15 +1,29 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Dimensions, Animated} from 'react-native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 import UpdateBloc from './Components/updates';
 
 export default class UpdateScreen extends Component {
+  slideUpdateIn = new Animated.Value(-100);
+  slideFromLeft = new Animated.Value(-100);
+  
+  componentDidMount() {
+      Animated.timing(this.slideUpdateIn, {
+      duration: 1000,
+      toValue: 0
+      }).start()
+
+      Animated.timing(this.slideFromLeft, {
+        duration: 3000,
+        toValue: 0
+        }).start()
+  }
     render() {
       return (
         <ScrollView style={styles.bg}>
           <View style={styles.container}>
-          <Image
-          style={styles.imageStyle}
+          <Animated.Image
+          style={{...styles.imageStyle, top:this.slideUpdateIn}}
           source={require('./assets/updates.jpg')}
         />
         {/* use the updateBloc component we created in the updates file, and pass in according properties to create news article style updates with pictures and captions and titles */}

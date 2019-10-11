@@ -1,18 +1,36 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, Button, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, TextInput, Image, Animated } from 'react-native';
 
 export default class LoginScreen extends Component {
+
+  animationSpring = new Animated.Value(-100);
+  fadeIn = new Animated.Value(0);
+  componentDidMount() {
+
+    Animated.timing(this.fadeIn, {
+      duration: 3500,
+      toValue: 1
+    }).start()
+
+    
+  Animated.spring(this.animationSpring,{
+    duration: 3500,
+    toValue: 0,
+    speed: 0,
+    bounciness: 0,
+  }).start()
+  }
     render() {
       return (
-        <View style={styles.container}>
+        <Animated.View style={{...styles.container, opacity: this.fadeIn}}>
           {/* use an image from the assets folder */}
-          <Image
-          style={styles.imageStyle}
+          <Animated.Image
+          style={{...styles.imageStyle, top: this.animationSpring}}
           source={require('./assets/Worlds_2019.png')}
         />
-          <Text style={styles.welcomeTxt}>Welcome to the League of Legends {"\n"}
-         World Championships tracker app</Text>
-          <Text style={styles.infoTxt}>Log in with your Riot Games account</Text>
+          <Animated.Text style={{...styles.welcomeTxt}}>Welcome to the League of Legends {"\n"}
+         World Championships tracker app</Animated.Text>
+          <Animated.Text style={{...styles.infoTxt}}>Log in with your Riot Games account</Animated.Text>
           <Text>Username</Text>
           {/* create txt inputs with the styles from down below */}
           <TextInput
@@ -27,7 +45,7 @@ export default class LoginScreen extends Component {
             () =>
              this.props.navigation.navigate('Tabs')
         } title="Log In"></Button>
-      </View>
+      </Animated.View>
       );
     }
   }

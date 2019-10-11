@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Dimensions, Animated } from 'react-native';
 
 //this page creates a component with an image, title and caption, to be used on the home page
 
@@ -12,20 +12,30 @@ const playerImages = {
     caps: require('./images/g2Caps.png')
   };
 
+
+
 export default class PlayerCard extends React.Component {
+  fadeRestIn = new Animated.Value(0);
+componentDidMount(){
+  Animated.timing(this.fadeRestIn, {
+    duration: 8000,
+    toValue: 1
+  }).start()
+}
+
     
   render() {
   return (
     <ScrollView contentContainerStyle={styles.imageContainer}>
       {/* setup an image for the component, with the prop name of playerImage */}
-      <Image
-          style={styles.imageStyle}
+      <Animated.Image
+          style={{...styles.imageStyle, opacity:this.fadeRestIn}}
           source={playerImages[this.props.playerImage]}
         />
         {/* setup an image for the component, with the prop name of playerImage */}
-        <Text style={styles.playerName}>{this.props.playerName}</Text>
+        <Animated.Text style={{...styles.playerName, opacity:this.fadeRestIn}}>{this.props.playerName}</Animated.Text>
         {/* setup a text tag for the component, with the prop name of playerCaption */}
-      <Text style={styles.playerCaption}>{this.props.playerCaption}</Text>
+      <Animated.Text style={{...styles.playerCaption, opacity:this.fadeRestIn}}>{this.props.playerCaption}</Animated.Text>
     </ScrollView>
   );
 }
